@@ -454,7 +454,7 @@ export {
    registerUser,
    loginUser,
    logoutUser,
-   refreshAccessToken,
+   incomingRefreshAccessToken,
    getCurrentUser,
    changeCurrentUserPassword,
    updateAccountDetails,

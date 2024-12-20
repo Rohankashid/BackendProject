@@ -3,7 +3,7 @@ import {
     loginUser,
     logoutUser,
     registerUser,
-    refreshAccessToken,
+    incomingRefreshAccessToken,
     changeCurrentUserPassword,
     getCurrentUser,
     updateAccountDetails,
@@ -13,7 +13,8 @@ import {
     getWatchHistory
 }from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js"
-import { verify } from "jsonwebtoken";
+import pkg from 'jsonwebtoken';
+const { verify } = pkg;
 
 
 
@@ -36,23 +37,23 @@ router.route("/login").post(loginUser)
 
 //secured  routes
 
-router.route("/logout").post(verifyJWT, logoutUser)
+router.route("/logout").post(verify, logoutUser)
 
-router.route("/refresh-token").post(refreshAccessToken)
+router.route("/refresh-token").post(incomingRefreshAccessToken)
 
-router.route("/change-password").post(verifyJWT, changeCurrentUserPassword())
+router.route("/change-password").post(verify, changeCurrentUserPassword())
 
-router.route("/current-user").get(verifyJWT, getCurrentUser)
+router.route("/current-user").get(verify, getCurrentUser)
 
-router.route("/update-account").patch(verifyJWT, updateAccountDetails)
+router.route("/update-account").patch(verify, updateAccountDetails)
 
-router.route("/avatar").patch(verifyJWT, upload.single("avatar"), updateUserAvatar)
+router.route("/avatar").patch(verify, upload.single("avatar"), updateUserAvatar)
 
-router.route("/cover-image").patch(verifyJWT, upload.single("/coverImage"), updateUserCoverImage)
+router.route("/cover-image").patch(verify, upload.single("/coverImage"), updateUserCoverImage)
 
-router.route("/c/:username").get(verifyJWT, getUserChannelProfile)
+router.route("/c/:username").get(verify, getUserChannelProfile)
 
-router.route("/history").get(verifyJWT, getWatchHistory)
+router.route("/history").get(verify, getWatchHistory)
 
 
 export default router
